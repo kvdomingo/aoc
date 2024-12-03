@@ -1,15 +1,22 @@
+from aocd.models import Puzzle
+
 from common.config import BASE_DIR
 
+puzzle = Puzzle(year=2024, day=2)
 
-def load_input(is_test: bool = False):
-    file = "y2024/d02/test.txt" if is_test else "y2024/d02/input.txt"
 
-    data: list[list[int]] = []
-    with open(BASE_DIR / file) as fh:
-        for line in fh.readlines():
-            data.append([int(l) for l in line.strip().split(" ")])
+def load_input(is_test: bool = False) -> list[list[int]]:
+    if is_test:
+        with open(BASE_DIR / "y2024/d02/test.txt") as fh:
+            input_ = fh.read().strip()
+    else:
+        input_ = puzzle.input_data
 
-        return data
+    data = []
+    for line in input_.split("\n"):
+        data.append([int(l) for l in line.strip().split(" ")])
+
+    return data
 
 
 def is_row_safe(row: list[int]):

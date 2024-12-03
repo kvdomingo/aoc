@@ -1,11 +1,18 @@
+from aocd.models import Puzzle
+
 from common.config import BASE_DIR
+
+puzzle = Puzzle(year=2024, day=1)
 
 
 def load_input(is_test: bool = False):
-    file = "y2024/d01/test.txt" if is_test else "y2024/d01/input.txt"
+    if is_test:
+        with open(BASE_DIR / "y2024/d01/test.txt") as fh:
+            input_ = fh.read().strip()
+    else:
+        input_ = puzzle.input_data
 
-    with open(BASE_DIR / file) as fh:
-        return [l.strip().split("   ") for l in fh.readlines()]
+    return [l.strip().split("   ") for l in input_.split("\n")]
 
 
 def part1(data: list[list[str]]):
