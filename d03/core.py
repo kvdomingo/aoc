@@ -1,13 +1,18 @@
 import re
 
+from aocd.models import Puzzle
+
 from common.config import BASE_DIR
 
+puzzle = Puzzle(year=2024, day=3)
 
-def load_input(is_test: bool = False):
-    file = "d03/test.txt" if is_test else "d03/input.txt"
 
-    with open(BASE_DIR / file) as fh:
-        return fh.read().strip()
+def load_input(is_test: bool = False) -> str:
+    if is_test:
+        with open(BASE_DIR / "d03/test.txt") as fh:
+            return fh.read().strip()
+
+    return puzzle.input_data
 
 
 def mul(x: int, y: int) -> int:
@@ -19,7 +24,7 @@ def part1(data: str):
 
     sum_ = 0
     for match_ in matches:
-        # yes, this is very hacky and potentially dangerous
+        # yes, this is very hacky and dangerous
         sum_ += eval(match_)
 
     print(f"{sum_=}")
@@ -27,13 +32,16 @@ def part1(data: str):
 
 
 def part2(data: str):
-    splits = [d.split("don't()") for d in data.split("do()")]
+    matches = re.findall(r"mul\(\d+,\d+\)|do\(\)|don't\(\)", data)
 
     sum_ = 0
-    for split in splits:
-        dos = "".join(split[::2])
-        matches = re.findall(r"mul\(\d+,\d+\)", dos)
-        for match_ in matches:
+    do = True
+    for match_ in matches:
+        if match_ == "do()":
+            do = True
+        elif match_ == "don't()":
+            do = False
+        elif do:
             sum_ += eval(match_)
 
     print(f"{sum_=}")
