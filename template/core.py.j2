@@ -1,0 +1,21 @@
+from aocd.models import Puzzle
+
+from common.config import BASE_DIR
+
+puzzle = Puzzle(year={{ year }}, day={{ day }})
+
+
+def load_input(is_test: bool = False) -> str:
+    if is_test:
+        with open(BASE_DIR / "y{{ year }}/d{{ '%02d' % day }}/test.txt") as fh:
+            return fh.read().strip()
+
+    return puzzle.input_data
+
+
+def part1(data):
+    pass
+
+
+def part2(data):
+    pass

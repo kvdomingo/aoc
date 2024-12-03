@@ -1,0 +1,10 @@
+from y{{ year }}.d{{ '%02d' % day }}.core import load_input, part1, part2
+
+
+def test_part1():
+    data = load_input(is_test=True)
+    assert part1(data) == {{ part1_solution }}
+
+def test_part2():
+    data = load_input(is_test=True)
+    assert part2(data) == {{ part2_solution }}
