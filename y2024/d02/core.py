@@ -1,9 +1,8 @@
-
 from common.config import BASE_DIR
 
 
 def load_input(is_test: bool = False):
-    file = "d02/test.txt" if is_test else "d02/input.txt"
+    file = "y2024/d02/test.txt" if is_test else "y2024/d02/input.txt"
 
     data: list[list[int]] = []
     with open(BASE_DIR / file) as fh:

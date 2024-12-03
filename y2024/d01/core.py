@@ -2,7 +2,7 @@ from common.config import BASE_DIR
 
 
 def load_input(is_test: bool = False):
-    file = "d01/test.txt" if is_test else "d01/input.txt"
+    file = "y2024/d01/test.txt" if is_test else "y2024/d01/input.txt"
 
     with open(BASE_DIR / file) as fh:
         return [l.strip().split("   ") for l in fh.readlines()]

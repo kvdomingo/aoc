@@ -9,7 +9,7 @@ puzzle = Puzzle(year=2024, day=3)
 
 def load_input(is_test: bool = False) -> str:
     if is_test:
-        with open(BASE_DIR / "d03/test.txt") as fh:
+        with open(BASE_DIR / "y2024/d03/test.txt") as fh:
             return fh.read().strip()
 
     return puzzle.input_data
