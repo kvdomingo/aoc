@@ -4,8 +4,6 @@ from common.config import BASE_DIR
 
 puzzle = Puzzle(year=2024, day=4)
 
-FIND_WORD = "XMAS"
-
 
 def load_input(is_test: bool = False) -> str:
     if is_test:
@@ -15,65 +13,41 @@ def load_input(is_test: bool = False) -> str:
     return puzzle.input_data
 
 
-def flatten_diagonally(matrix: list[list]):
-    out = []
-    len_x = len(matrix[0])
-    len_y = len(matrix)
-
-    for i in range(len_x + len_y - 1):
-        diag = []
-        for j in range(max(0, i - len_y + 1), min(i + 1, len_x)):
-            diag.append(matrix[j][i - j])
-        out.extend(diag)
-
-    for i in range(1, len_y):
-        diag = []
-        for j in range(min(len_x, i + 1)):
-            diag.append(matrix[j][i - j])
-        out.extend(diag)
-
-    return out
-
-
-def flip_horizontal(matrix: list[list]):
-    len_y = len(matrix)
-    out = []
-
-    for j in range(len_y):
-        out.append(matrix[j][::-1])
-
-    return out
-
-
 def part1(data: str):
     matrix = [list(d) for d in data.split("\n")]
-    matrix_f = flip_horizontal(matrix)
     len_x = len(matrix[0])
     len_y = len(matrix)
+    find_word = "XMAS"
 
-    horizontal = [r for row in matrix for r in row]
-    reverse_horizontal = horizontal[::-1]
-    vertical = [matrix[j][i] for i in range(len_x) for j in range(len_y)]
-    reverse_vertical = vertical[::-1]
+    def check_direction(x, y, dx, dy):
+        for i in range(len(find_word)):
+            nx = x + i * dx
+            ny = y + i * dy
 
-    diagonal_ne = flatten_diagonally(matrix)
-    diagonal_sw = diagonal_ne[::-1]
+            if 0 <= nx < len_x and 0 <= ny < len_y and matrix[ny][nx] == find_word[i]:
+                continue
+            else:
+                return False
 
-    diagonal_se = flatten_diagonally(matrix_f)
-    diagonal_nw = diagonal_se[::-1]
+        return True
+
+    directions = [
+        (0, 1),  # south
+        (1, 0),  # east
+        (0, -1),  # north
+        (-1, 0),  # west
+        (1, 1),  # southeast
+        (1, -1),  # northeast
+        (-1, 1),  # northwest
+        (-1, -1),  # southwest
+    ]
 
     count = 0
-    for flat in [
-        horizontal,
-        reverse_horizontal,
-        vertical,
-        reverse_vertical,
-        diagonal_ne,
-        diagonal_sw,
-        diagonal_se,
-        diagonal_nw,
-    ]:
-        count += "".join(flat).count(FIND_WORD)
+    for y in range(len_y):
+        for x in range(len_x):
+            for dx, dy in directions:
+                if check_direction(x, y, dx, dy):
+                    count += 1
 
     print(f"{count=}")
     return count
