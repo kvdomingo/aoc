@@ -54,4 +54,52 @@ def part1(data: str):
 
 
 def part2(data: str):
-    pass
+    matrix = [list(d) for d in data.split("\n")]
+    len_x = len(matrix[0])
+    len_y = len(matrix)
+    count = 0
+
+    for y in range(len_y):
+        for x in range(len_x):
+            if x - 1 < 0 or y - 1 < 0 or x + 1 == len_x or y + 1 == len_x:
+                # boundary condition
+                continue
+
+            if matrix[y][x] == "A" and (
+                all(
+                    [
+                        matrix[y - 1][x - 1] == "M",  # M M
+                        matrix[y - 1][x + 1] == "M",  #  A
+                        matrix[y + 1][x - 1] == "S",  # S S
+                        matrix[y + 1][x + 1] == "S",
+                    ]
+                )
+                or all(
+                    [
+                        matrix[y - 1][x - 1] == "S",  # S S
+                        matrix[y - 1][x + 1] == "S",  #  A
+                        matrix[y + 1][x - 1] == "M",  # M M
+                        matrix[y + 1][x + 1] == "M",
+                    ]
+                )
+                or all(
+                    [
+                        matrix[y - 1][x - 1] == "M",  # M S
+                        matrix[y - 1][x + 1] == "S",  #  A
+                        matrix[y + 1][x - 1] == "M",  # M S
+                        matrix[y + 1][x + 1] == "S",
+                    ]
+                )
+                or all(
+                    [
+                        matrix[y - 1][x - 1] == "S",  # S M
+                        matrix[y - 1][x + 1] == "M",  #  A
+                        matrix[y + 1][x - 1] == "S",  # S M
+                        matrix[y + 1][x + 1] == "M",
+                    ]
+                )
+            ):
+                count += 1
+
+    print(f"{count=}")
+    return count

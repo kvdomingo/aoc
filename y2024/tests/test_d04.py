@@ -1,4 +1,4 @@
-from y2024.d04.core import load_input, part1
+from y2024.d04.core import load_input, part1, part2
 
 
 def test_part1():
@@ -7,4 +7,5 @@ def test_part1():
 
 
 def test_part2():
-    assert True
+    data = load_input(is_test=True)
+    assert part2(data) == 9
