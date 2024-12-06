@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from aocd.models import Puzzle
 
 from common.config import BASE_DIR
@@ -86,4 +88,49 @@ def part1(data: str):
 
 
 def part2(data):
-    pass
+    matrix = preprocess_input(data)
+    len_y = len(matrix)
+    len_x = len(matrix[0])
+    start_pos = next(
+        (i, j) for j in range(len_y) for i in range(len_x) if matrix[j][i] == START_CHAR
+    )
+    guard = Guard(start_pos)
+    possible_options = 0
+
+    for j in range(len_y):
+        for i in range(len_x):
+            no_iters = 0
+            tmp_matrix = deepcopy(matrix)
+            tmp_matrix[j][i] = "#"
+
+            while True:
+                if no_iters > len_x * len_y:
+                    possible_options += 1
+                    break
+
+                new_pos = guard.plan_move_forward()
+
+                if any(
+                    [
+                        new_pos.x < 0,
+                        new_pos.x >= len_x,
+                        new_pos.y < 0,
+                        new_pos.y >= len_y,
+                    ]
+                ):
+                    # out of bounds
+                    tmp_matrix[guard.position.y][guard.position.x] = "X"
+                    break
+
+                if tmp_matrix[new_pos.y][new_pos.x] == "#":
+                    # hit obstacle; rotate clockwise
+                    guard.rotate_clockwise()
+                    continue
+
+                tmp_matrix[guard.position.y][guard.position.x] = "X"
+                guard.commit_move_forward()
+
+                no_iters += 1
+
+    print(f"{possible_options=}")
+    return possible_options
