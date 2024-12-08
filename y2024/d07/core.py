@@ -54,5 +54,36 @@ def part1(data: str):
     return sum_
 
 
+def concat(a: int, b: int) -> int:
+    return int(f"{a}{b}")
+
+
 def part2(data: str):
-    pass
+    calibrations = preprocess_input(data)
+    pool = ["+", "*", "||"]
+    sum_ = 0
+
+    for calibration in calibrations:
+        test_value = calibration["key"]
+        for ops in product(pool, repeat=len(calibration["values"]) - 1):
+            test_result = calibration["values"][0]
+            for i, op in enumerate(ops):
+                match op:
+                    case "+":
+                        operator = add
+                    case "*":
+                        operator = mul
+                    case "||":
+                        operator = concat
+                    case _:
+                        raise ValueError(f"Unknown {op=} in {ops=}")
+
+                test_result = operator(test_result, calibration["values"][i + 1])
+
+            if test_result == test_value:
+                sum_ += test_value
+                # once we have a working equation, we can skip the rest of the combinations
+                break
+
+    print(f"{sum_=}")
+    return sum_
