@@ -8,4 +8,4 @@ def test_part1():
 
 def test_part2():
     data = load_input(is_test=True)
-    assert part2(data) == 14
+    assert part2(data) == 34
