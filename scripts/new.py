@@ -9,7 +9,7 @@ from common.config import BASE_DIR
 FILES_TO_COPY = ["__init__.py", "__main__.py"]
 
 
-def main(year: int, day: int, solution1: int, solution2: int):
+def main(year: int, day: int, solution: int):
     env = Environment(
         loader=FileSystemLoader(BASE_DIR / "template"),
         autoescape=select_autoescape(),
@@ -33,23 +33,24 @@ def main(year: int, day: int, solution1: int, solution2: int):
             test_template.render(
                 year=year,
                 day=day,
-                part1_solution=solution1,
-                part2_solution=solution2,
+                part1_solution=solution,
+                part2_solution=solution,
             )
         )
+
+    with open(BASE_DIR / f"y{year}/d{day:02}/test.txt", "w") as f:
+        f.write("")
 
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-y", "--year", help="Advent of Code year", type=int)
     parser.add_argument("-d", "--day", help="Advent of Code day", type=int)
-    parser.add_argument("-s1", "--solution1", help="Part 1 test solution", type=int)
-    parser.add_argument("-s2", "--solution2", help="Part 2 test solution", type=int)
+    parser.add_argument("-s", "--solution", help="Part 1 test solution", type=int)
     args = parser.parse_args()
 
     main(
         year=args.year,
         day=args.day,
-        solution1=args.solution1,
-        solution2=args.solution2,
+        solution=args.solution,
     )
