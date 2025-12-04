@@ -1,13 +1,17 @@
-from aocd.models import Puzzle
+from aocd.models import Puzzle, User
 
-from common.config import BASE_DIR
+from common.config import settings
 
-puzzle = Puzzle(year={{ year }}, day={{ day }})
+puzzle = Puzzle(
+    year={{ year }},
+    day={{ day }},
+    user=User(token=settings.AOC_SESSION.get_secret_value()),
+)
 
 
 def load_input(is_test: bool = False) -> str:
     if is_test:
-        with open(BASE_DIR / "y{{ year }}/d{{ '%02d' % day }}/test.txt") as fh:
+        with open(settings.BASE_DIR / "y{{ year }}/d{{ '%02d' % day }}/test.txt") as fh:
             return fh.read().strip()
 
     return puzzle.input_data

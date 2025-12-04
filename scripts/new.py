@@ -4,8 +4,9 @@ from argparse import ArgumentParser
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from common.config import BASE_DIR
+from common.config import settings
 
+BASE_DIR = settings.BASE_DIR
 FILES_TO_COPY = ["__init__.py", "__main__.py"]
 
 

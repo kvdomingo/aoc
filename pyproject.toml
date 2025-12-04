@@ -1,28 +1,26 @@
-[tool.poetry]
-name = "aoc2024"
-version = "0.1.0"
+[project]
+name = "aoc"
+version = "2025.12.1"
 description = ""
-authors = ["Kenneth V. Domingo <hello@kvd.studio>"]
-readme = "README.md"
+authors = [{ name = "Kenneth V. Domingo", email = "hello@kvd.studio" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pytest>=8.0.0,<9",
+    "advent-of-code-data>=2.0.0,<3",
+    "python-dotenv>=1.0.1,<2",
+    "jinja2>=3.1.4,<4",
+    "numpy>=2.1.3,<3",
+    "matplotlib>=3.9.3,<4",
+    "pydantic-settings>=2.12.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.12"
-pytest = "^8.3.4"
-aocd = "^0.1"
-python-dotenv = "^1.0.1"
-jinja2 = "^3.1.4"
-numpy = "^2.1.3"
-matplotlib = "^3.9.3"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.8.1"
-ipython = "^8.30.0"
-jupyter = "^1.1.1"
-notebook = "^7.3.1"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ruff>=0.8.1,<0.9",
+    "ipython>=8.30.0,<9",
+    "jupyter>=1.1.1,<2",
+    "notebook>=7.3.1,<8",
+]
 
 [tool.ruff]
 target-version = "py312"
