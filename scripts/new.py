@@ -1,6 +1,7 @@
 import os
 import shutil
 from argparse import ArgumentParser
+from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -44,9 +45,25 @@ def main(year: int, day: int, solution: int):
 
 
 if __name__ == "__main__":
+    now = datetime.now()
+
     parser = ArgumentParser()
-    parser.add_argument("-y", "--year", help="Advent of Code year", type=int)
-    parser.add_argument("-d", "--day", help="Advent of Code day", type=int)
+    parser.add_argument(
+        "-y",
+        "--year",
+        help="Advent of Code year",
+        type=int,
+        required=False,
+        default=now.year,
+    )
+    parser.add_argument(
+        "-d",
+        "--day",
+        help="Advent of Code day",
+        type=int,
+        required=False,
+        default=now.day,
+    )
     parser.add_argument("-s", "--solution", help="Part 1 test solution", type=int)
     args = parser.parse_args()
 
