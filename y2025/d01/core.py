@@ -17,20 +17,39 @@ def load_input(is_test: bool = False) -> str:
     return puzzle.input_data
 
 
-def part1(data):
+def part1(data: str):
     current = 50
-    ticks = 0
+    zeroes = 0
 
     for rotation in data.splitlines():
         direction = -1 if rotation[0] == "L" else 1
         amount = int(rotation[1:])
         current = (current + direction * amount) % 100
         if current == 0:
-            ticks += 1
+            zeroes += 1
 
-    print(f"{ticks=}")
-    return ticks
+    print(f"{zeroes=}")
+    return zeroes
 
 
-def part2(data):
-    pass
+def part2(data: str):
+    current = 50
+    zeroes = 0
+
+    for rotation in data.splitlines():
+        direction = -1 if rotation[0] == "L" else 1
+        amount = int(rotation[1:])
+        div, mod = divmod(amount, 100)
+        zeroes += div
+
+        if direction == 1:
+            if current + mod >= 100:
+                zeroes += 1
+        else:
+            if current != 0 and current - mod <= 0:
+                zeroes += 1
+
+        current = (current + (direction * mod)) % 100
+
+    print(f"{zeroes=}")
+    return zeroes

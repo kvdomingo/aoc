@@ -9,3 +9,8 @@ def test_part1():
 def test_part2():
     data = load_input(is_test=True)
     assert part2(data) == 6
+
+
+def test_part2_alt1():
+    data = "\n".join(["L50", "R101"])
+    assert part2(data) == 2

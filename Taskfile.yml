@@ -1,0 +1,14 @@
+version: 3
+
+tasks:
+  new:
+    desc: Scaffold files for the solution of a new day
+    cmd: infisical run -- python -m scripts.new {{ .CLI_ARGS }}
+
+  test:
+    desc: Run the tests for the solution
+    cmd: infisical run -- python -m pytest {{ .CLI_ARGS }}
+
+  run:
+    desc: Run the solution for the day
+    cmd: infisical run -- python -m {{ .CLI_ARGS }}
