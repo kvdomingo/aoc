@@ -26,22 +26,30 @@ def part1(data: str):
 
         sorted_bank_unique = sorted(set(bank), reverse=True)
         highest_battery = sorted_bank_unique[0]
-        if bank.index(highest_battery) == len(bank) - 1:
+        if (
+            bank.count(highest_battery) == 1
+            and bank.index(highest_battery) == len(bank) - 1
+        ):
             highest_battery = sorted_bank_unique[1]
 
         if bank.count(highest_battery) == 1:
             highest_battery_idx = bank.index(highest_battery)
-            next_battery = bank[highest_battery_idx + 1]
-            highest_joltage = highest_battery * 10 + next_battery
+            next_highest_battery = max(bank[highest_battery_idx + 1 :])
+            highest_joltage = highest_battery * 10 + next_highest_battery
         else:
-            for i, battery in enumerate(bank):
-                if battery != highest_battery or i + 1 >= len(bank):
+            highest_battery_positions = [
+                i for i, x in enumerate(bank) if x == highest_battery
+            ]
+            for position in highest_battery_positions:
+                if position + 1 >= len(bank):
                     continue
 
-                next_battery = bank[i + 1]
-                current_joltage = battery * 10 + next_battery
-                if current_joltage > highest_joltage:
-                    highest_joltage = current_joltage
+                subbank = bank[position + 1 :]
+                sorted_subbank_unique = sorted(set(subbank), reverse=True)
+                sub_highest_battery = sorted_subbank_unique[0]
+                sub_highest_joltage = highest_battery * 10 + sub_highest_battery
+                if sub_highest_joltage > highest_joltage:
+                    highest_joltage = sub_highest_joltage
 
         total += highest_joltage
 
