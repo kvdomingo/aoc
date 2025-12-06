@@ -24,4 +24,20 @@ def test_part1_alt4():
 
 def test_part2():
     data = load_input(is_test=True)
-    assert part2(data) is None
+    assert part2(data) == 3121910778619
+
+
+def test_part2_alt1():
+    assert part2("987654321111111") == 987654321111
+
+
+def test_part2_alt2():
+    assert part2("811111111111119") == 811111111119
+
+
+def test_part2_alt3():
+    assert part2("234234234234278") == 434234234278
+
+
+def test_part2_alt4():
+    assert part2("818181911112111") == 888911112111

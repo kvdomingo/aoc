@@ -58,4 +58,20 @@ def part1(data: str):
 
 
 def part2(data: str):
-    pass
+    banks = [[int(s) for s in list(split)] for split in data.splitlines()]
+    total = 0
+
+    for bank in banks:
+        highest_joltage = 0
+        start_idx = 0
+
+        for i in range(12):
+            subbank = bank[start_idx : len(bank) - (12 - i) + 1]
+            highest_battery = max(subbank)
+            start_idx += subbank.index(highest_battery) + 1
+            highest_joltage += highest_battery * 10 ** (12 - i - 1)
+
+        total += highest_joltage
+
+    print(f"{total=}")
+    return total
