@@ -38,4 +38,21 @@ def part1(data: str):
 
 
 def part2(data: str):
-    pass
+    lines = data.splitlines()
+    blank_idx = lines.index("")
+    fresh_ranges = [[int(r) for r in line.split("-")] for line in lines[:blank_idx]]
+    fresh_ranges = sorted(fresh_ranges, key=lambda r: r[0])
+    merged_ranges = [fresh_ranges[0]]
+
+    for range_ in fresh_ranges[1:]:
+        last = merged_ranges[-1]
+        current = range_
+
+        if current[0] <= last[1]:
+            last[1] = max(last[1], current[1])
+        else:
+            merged_ranges.append(current)
+
+    fresh = sum([end - start + 1 for start, end in merged_ranges])
+    print(f"{fresh=}")
+    return fresh
