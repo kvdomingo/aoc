@@ -3,20 +3,21 @@ repos:
     rev: v0.6.9
     hooks:
       - id: ruff
-        args: [ --fix ]
+        args: [--fix]
       - id: ruff-format
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
-        args: [ '--maxkb=500' ]
+        args: ["--maxkb=500"]
       - id: trailing-whitespace
+        exclude: y2025/d06/test.txt
       - id: end-of-file-fixer
       - id: mixed-line-ending
-        args: [ '--fix=lf' ]
+        args: ["--fix=lf"]
       - id: check-merge-conflict
       - id: check-yaml
-        args: [ '--allow-multiple-documents' ]
+        args: ["--allow-multiple-documents"]
         exclude: templates/.+\.ya?ml$
       - id: check-json
       - id: check-toml
@@ -25,4 +26,4 @@ repos:
     rev: v8.21.1
     hooks:
       - id: gitleaks
-        args: [ '--verbose' ]
+        args: ["--verbose"]
