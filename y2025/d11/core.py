@@ -1,4 +1,5 @@
 from functools import cache
+from typing import Literal
 
 from aocd.models import Puzzle, User
 
@@ -11,9 +12,12 @@ puzzle = Puzzle(
 )
 
 
-def load_input(is_test: bool = False) -> str:
+def load_input(is_test: bool = False, part: Literal[1, 2] | None = None) -> str:
     if is_test:
-        with open(settings.BASE_DIR / "y2025/d11/test.txt") as fh:
+        if part is None:
+            raise ValueError("`part` is required")
+
+        with open(settings.BASE_DIR / f"y2025/d11/test_part{part}.txt") as fh:
             return fh.read().strip()
 
     return puzzle.input_data
@@ -43,4 +47,27 @@ def part1(data: str):
 
 
 def part2(data: str):
-    pass
+    graph = {
+        k: set(v.split(" "))
+        for k, v in [line.split(": ") for line in data.splitlines()]
+    }
+
+    @cache
+    def dfs(node: str, *, visited_dac=False, visited_fft=False) -> int:
+        total = 0
+
+        if node == "out" and visited_dac and visited_fft:
+            return 1
+
+        for child in graph.get(node, []):
+            total += dfs(
+                child,
+                visited_dac=visited_dac or node == "dac",
+                visited_fft=visited_fft or node == "fft",
+            )
+
+        return total
+
+    total = dfs("svr")
+    print(f"{total=}")
+    return total

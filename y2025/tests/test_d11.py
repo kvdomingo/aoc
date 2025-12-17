@@ -2,10 +2,10 @@ from y2025.d11.core import load_input, part1, part2
 
 
 def test_part1():
-    data = load_input(is_test=True)
+    data = load_input(is_test=True, part=1)
     assert part1(data) == 5
 
 
 def test_part2():
-    data = load_input(is_test=True)
-    assert part2(data) is None
+    data = load_input(is_test=True, part=2)
+    assert part2(data) == 2
